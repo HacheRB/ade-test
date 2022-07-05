@@ -1,6 +1,7 @@
 import app from './app'
 import cluster from 'cluster'
 import config from 'config'
+import { connectToDb } from './utils/dbConnection'
 import { cpus } from 'os'
 import http from 'http'
 import logger from './utils/logger'
@@ -13,9 +14,10 @@ const PORT = config.get<number>('port')
 // Basic Clustering
 if (cluster.isPrimary) {
 	logger.info(
-		`Server is running on port ${PORT} in ${ENVIRONMENT} environment.}`,
+		`Server is running on port ${PORT} in ${ENVIRONMENT} environment.`,
 	)
 	logger.info(`Primary cluster ${process.pid} is running`)
+	connectToDb()
 
 	// Fork workers.
 	for (let i = 0; i < NUMCPUS; i++) {
@@ -34,5 +36,7 @@ if (cluster.isPrimary) {
 	})
 } else {
 	const httpServer = http.createServer(app)
-	httpServer.listen(PORT, () => {})
+	httpServer.listen(PORT, () => {
+		connectToDb()
+	})
 }
