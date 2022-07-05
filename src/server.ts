@@ -3,6 +3,7 @@ import cluster from 'cluster'
 import config from 'config'
 import { cpus } from 'os'
 import http from 'http'
+import logger from './utils/logger'
 import process from 'process'
 
 const ENVIRONMENT = process.env.NODE_ENV
@@ -11,7 +12,10 @@ const PORT = config.get<number>('port')
 
 // Basic Clustering
 if (cluster.isPrimary) {
-	console.log('Master cluster')
+	logger.info(
+		`Server is running on port ${PORT} in ${ENVIRONMENT} environment.}`,
+	)
+	logger.info(`Primary cluster ${process.pid} is running`)
 
 	// Fork workers.
 	for (let i = 0; i < NUMCPUS; i++) {
@@ -19,17 +23,16 @@ if (cluster.isPrimary) {
 	}
 
 	cluster.on('online', (worker) => {
-		console.log('Worker online')
+		logger.info(`Worker ${worker.process.pid} is running`)
 	})
 
 	cluster.on('exit', (worker, code, signal) => {
-		console.log('Worker offline')
-
+		logger.info(
+			`worker ${worker.process.pid} died with code ${code} and signal ${signal}`,
+		)
 		cluster.fork()
 	})
 } else {
 	const httpServer = http.createServer(app)
-	httpServer.listen(PORT, () => {
-		console.log('Server start up')
-	})
+	httpServer.listen(PORT, () => {})
 }
