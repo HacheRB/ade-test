@@ -11,6 +11,7 @@ import { Schemas } from '../definitions/department'
 const router = express.Router()
 
 router.get('/', getDepartments)
+
 router.post('/', validateWithJoi(Schemas.department.default), addDepartment)
 
 router.put(
