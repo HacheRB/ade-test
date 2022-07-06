@@ -9,7 +9,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"outDir": "./dist",
+		"outDir": "./build",
 		"rootDir": "./src"
 	},
 	"lib": ["es2021"],

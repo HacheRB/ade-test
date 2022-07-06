@@ -1,23 +1,29 @@
-import dotenv from 'dotenv'
-dotenv.config()
 import express, { Express } from 'express'
-import cors from 'cors'
 import helmet from 'helmet'
-import path from 'path'
 import router from './routes'
 
 const app: Express = express()
 
 app
-	.use(
-		cors({
-			origin: `http://localhost`, //Needs configuration
-		}),
-	)
 	.use(helmet())
 	.use(express.urlencoded({ extended: false }))
 	.use(express.json())
-	.use(express.static(path.join(__dirname, '..', 'public')))
+
+	.use((req, res, next) => {
+		res.header('Access-Control-Allow-Origin', '*')
+		res.header(
+			'Access-Control-Allow-Headers',
+			'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+		)
+		if (req.method == 'OPTIONS') {
+			res.header(
+				'Access-Control-Allow-Methods',
+				'PUT, POST, PATCH, DELETE, GET',
+			)
+			return res.status(200).json({})
+		}
+		next()
+	})
 
 	// Routes
 	.use('/api', router)

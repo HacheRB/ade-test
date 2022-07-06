@@ -1,4 +1,4 @@
-import config from 'config'
+import config from '../config/config'
 import logger from './logger'
 import mongoose from 'mongoose'
 import process from 'process'
@@ -14,11 +14,10 @@ mongoose.connection.on('error', (error: typeof mongoose.Error) => {
 })
 
 export async function connectToDb() {
-	const dbUri = config.get<string>('dbUri')
 	try {
-		await mongoose.connect(dbUri)
+		await mongoose.connect(config.DB_URI)
 	} catch (error) {
-		process.exit(1)
+		logger.error(error)
 	}
 }
 
