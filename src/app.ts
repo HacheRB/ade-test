@@ -1,5 +1,7 @@
 import express, { Express } from 'express'
 import helmet from 'helmet'
+import mongoSanitize from 'express-mongo-sanitize'
+
 import router from './routes'
 
 const app: Express = express()
@@ -8,6 +10,13 @@ app
 	.use(helmet())
 	.use(express.urlencoded({ extended: false }))
 	.use(express.json())
+	.use(
+		mongoSanitize({
+			onSanitize: ({ req, key }) => {
+				console.warn(`This request[${key}] is sanitized`, req)
+			},
+		}),
+	)
 
 	.use((req, res, next) => {
 		res.header('Access-Control-Allow-Origin', '*')
