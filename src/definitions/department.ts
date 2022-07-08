@@ -11,7 +11,7 @@ export type DepartmentName = Pick<IDepartment, 'name'>
 export const Schemas = {
 	department: {
 		default: Joi.object<DepartmentName>({
-			name: Joi.string().required(),
+			name: Joi.string().min(4).max(144).required(),
 		}),
 	},
 }
