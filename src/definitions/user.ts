@@ -29,6 +29,12 @@ export interface UserLogin {
 	password: string
 }
 
+export interface IResponseUser {
+	id: string
+	email: string
+	role: Roles
+}
+
 export const Schemas = {
 	user: {
 		creation: Joi.object<UserCreation>({

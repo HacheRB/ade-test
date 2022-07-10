@@ -10,7 +10,8 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"outDir": "./build",
-		"rootDir": "./src"
+		"rootDir": "./src",
+		"typeRoots": ["index.d.ts"]
 	},
 	"lib": ["es2021"],
 	"include": ["src/**/*"],
