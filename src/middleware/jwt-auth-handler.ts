@@ -20,6 +20,6 @@ export function jwtAuthHandler(
 		next()
 	} catch (err) {
 		res.clearCookie('token')
-		res.send(500).json({ ok: 0, message: 'Something went wrong' })
+		res.sendStatus(500).json({ ok: 0, message: 'Something went wrong' })
 	}
 }

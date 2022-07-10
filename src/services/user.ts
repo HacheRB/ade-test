@@ -1,21 +1,14 @@
 import jwt from 'jsonwebtoken'
 
 import config from '../config/config'
-import {
-	IEmployeeCreation,
-	IUserCreation,
-	IUserToken,
-	Roles,
-} from '../definitions/user'
+import { IUserCreation, IUserToken, Roles } from '../definitions/user'
 import User from '../models/user'
 import { checkPassword, hashPassword } from '../utils/bcrypt'
 
-export async function registerUser(
-	userParams: IUserCreation | IEmployeeCreation,
-) {
+export async function registerUser(userParams: IUserCreation) {
 	const registeredUser = await User.findOne({ email: userParams.email })
 
-	if (registeredUser) throw Error('user exists')
+	if (registeredUser) throw Error('OBJECT_EXISTS')
 
 	const hashedPassword = await hashPassword(userParams.password)
 

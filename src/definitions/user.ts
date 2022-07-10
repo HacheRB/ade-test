@@ -26,7 +26,6 @@ export interface IUserCreation {
 	name: string
 	role: Roles
 }
-export interface IEmployeeCreation extends IUserCreation {}
 
 export interface IUserLogin {
 	email: string
@@ -47,7 +46,7 @@ export const Schemas = {
 			name: Joi.string().min(4).max(144).required(),
 		}),
 		// Investigate how to generate base schema
-		employeeCreation: Joi.object<IEmployeeCreation>({
+		employeeCreation: Joi.object<IUserCreation>({
 			email: Joi.string().email().required(),
 			password: Joi.string().min(4).max(64).required(),
 			name: Joi.string().min(4).max(144).required(),
@@ -56,7 +55,7 @@ export const Schemas = {
 				.valid(...rolesArray),
 		}),
 
-		login: Joi.object<IUserCreation>({
+		login: Joi.object<IUserLogin>({
 			email: Joi.string().email().required(),
 			password: Joi.string().min(4).max(64).required(),
 		}),

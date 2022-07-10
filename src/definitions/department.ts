@@ -3,7 +3,13 @@ import { Types } from 'mongoose'
 
 export interface IDepartment {
 	name: string
-	officers: [Types.ObjectId]
+	officers: [IOfficerObject]
+}
+
+export interface IOfficerObject {
+	investigates_bikes: boolean
+	is_available: boolean
+	officer_id: Types.ObjectId
 }
 
 export type DepartmentName = Pick<IDepartment, 'name'>

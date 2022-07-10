@@ -1,10 +1,6 @@
 import { Request, Response } from 'express'
 
-import {
-	IEmployeeCreation,
-	IUserCreation,
-	IUserLogin,
-} from '../definitions/user'
+import { IUserCreation, IUserLogin } from '../definitions/user'
 import User from '../models/user'
 import {
 	authenticateUser as authenticateUserService,

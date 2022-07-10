@@ -19,7 +19,7 @@ export function errorHandler(
 			return res.status(500).json({ ok: 0, error: "Resource wasn't created" })
 		case ERROR_MESSAGE === 'NOT_UPDATED':
 			return res.status(500).json({ ok: 0, error: "Resource wasn't updated" })
-		case ERROR_MESSAGE === 'user exists':
+		case ERROR_MESSAGE === 'OBJECT_EXISTS':
 			return res.status(500).json({ ok: 0, error: ERROR_MESSAGE })
 		case ERROR_MESSAGE === 'access denied':
 			return res.status(403).json({ ok: 0, error: ERROR_MESSAGE })

@@ -11,13 +11,13 @@ const BikeSchema: Schema = new Schema({
 	},
 	color: {
 		type: String,
-		min: 4,
+		min: 3,
 		max: 144,
 		required: true,
 	},
 	type: {
 		type: String,
-		min: 4,
+		min: 3,
 		max: 144,
 		required: true,
 	},

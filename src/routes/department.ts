@@ -1,4 +1,6 @@
 import express from 'express'
+import { Roles } from '../definitions/user'
+import authorize from '../middleware/authorize'
 import { validateWithJoi } from '../middleware/joi'
 
 import {
@@ -12,7 +14,12 @@ const router = express.Router()
 
 router.get('/', getDepartments)
 
-router.post('/', validateWithJoi(Schemas.department.default), addDepartment)
+router.post(
+	'/',
+	authorize(Roles.ADMIN),
+	validateWithJoi(Schemas.department.default),
+	addDepartment,
+)
 
 router.put(
 	'/:id',
