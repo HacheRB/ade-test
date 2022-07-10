@@ -1,5 +1,10 @@
 import { Request, Response } from 'express'
-import { UserCreation, UserLogin } from '../definitions/user'
+
+import {
+	IEmployeeCreation,
+	IUserCreation,
+	IUserLogin,
+} from '../definitions/user'
 import User from '../models/user'
 import {
 	authenticateUser as authenticateUserService,
@@ -7,6 +12,7 @@ import {
 	registerUser as registerUserService,
 } from '../services/user'
 
+//Test endpoint to verify token
 export const test = async (req: Request, res: Response) => {
 	try {
 		return res.status(200).json({ ok: 1, ...req.user })
@@ -14,7 +20,7 @@ export const test = async (req: Request, res: Response) => {
 		res.status(500).json(err)
 	}
 }
-
+// Need to create service
 export const getUsers = async (req: Request, res: Response) => {
 	try {
 		const users = await User.find()
@@ -25,7 +31,7 @@ export const getUsers = async (req: Request, res: Response) => {
 }
 
 export async function registerUser(req: Request, res: Response) {
-	const userParams = req.body as UserCreation
+	const userParams = req.body as IUserCreation
 	try {
 		const user = await registerUserService(userParams)
 		res.status(200).json({ ok: 1, message: 'User Registered' })
@@ -35,13 +41,15 @@ export async function registerUser(req: Request, res: Response) {
 }
 
 export async function authenticateUser(req: Request, res: Response) {
-	const { email, password } = req.body as UserLogin
+	const { email, password } = req.body as IUserLogin
 	try {
 		const user = await authenticateUserService(email, password)
 		const token = createUserTokenService(user)
+
 		res.cookie('token', token, {
 			httpOnly: true,
 		})
+
 		res.status(200).json({ ok: 1, message: 'User Authenticated' })
 	} catch (err) {
 		res.status(500).json({ ok: 0, message: err.message })

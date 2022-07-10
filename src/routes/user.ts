@@ -12,10 +12,15 @@ import { validateWithJoi } from '../middleware/joi'
 
 const router = express.Router()
 
-router.get('/', getUsers)
-router.get('/test', jwtAuthHandler, test)
+router.get('/', getUsers) // Needs authorization middleware for Admin
+router.get('/test', jwtAuthHandler, test) // Needs authorization middleware for current User
 
 router.post('/', validateWithJoi(Schemas.user.creation), registerUser)
+router.post(
+	'/employee',
+	validateWithJoi(Schemas.user.employeeCreation),
+	registerUser,
+) //Admin Route for employee creation
 router.post('/login', validateWithJoi(Schemas.user.login), authenticateUser)
 
 export default router

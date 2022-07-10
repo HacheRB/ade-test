@@ -1,8 +1,8 @@
-import config from '../config/config'
-import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import { NextFunction, Request, Response } from 'express'
 
-import { IResponseUser } from '../definitions/user'
+import config from '../config/config'
+import { IUserToken } from '../definitions/user'
 
 const JWT_SECRET = config.JWT_SECRET
 
@@ -15,7 +15,7 @@ export function jwtAuthHandler(
 ) {
 	const token = req.cookies.token
 	try {
-		const { id, email, role } = jwt.verify(token, JWT_SECRET) as IResponseUser
+		const { id, email, role } = jwt.verify(token, JWT_SECRET) as IUserToken
 		req.user = { id, email, role }
 		next()
 	} catch (err) {

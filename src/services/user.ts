@@ -1,11 +1,18 @@
 import jwt from 'jsonwebtoken'
 
 import config from '../config/config'
-import { IResponseUser, UserCreation } from '../definitions/user'
+import {
+	IEmployeeCreation,
+	IUserCreation,
+	IUserToken,
+	Roles,
+} from '../definitions/user'
 import User from '../models/user'
 import { checkPassword, hashPassword } from '../utils/bcrypt'
 
-export async function registerUser(userParams: UserCreation) {
+export async function registerUser(
+	userParams: IUserCreation | IEmployeeCreation,
+) {
 	const registeredUser = await User.findOne({ email: userParams.email })
 
 	if (registeredUser) throw Error('user exists')
@@ -16,6 +23,7 @@ export async function registerUser(userParams: UserCreation) {
 		email: userParams.email,
 		name: userParams.name,
 		hashedPassword,
+		role: userParams.role || Roles.USER,
 	})
 
 	await user.save()
@@ -30,7 +38,7 @@ export async function authenticateUser(email: string, password: string) {
 		throw Error('Incorrect email or password')
 	}
 
-	const responseUser: IResponseUser = {
+	const responseUser: IUserToken = {
 		id: registeredUser._id,
 		email: registeredUser.email,
 		role: registeredUser.role,
@@ -38,6 +46,6 @@ export async function authenticateUser(email: string, password: string) {
 	return responseUser
 }
 
-export function createUserToken(user: IResponseUser) {
+export function createUserToken(user: IUserToken) {
 	return jwt.sign(user, config.JWT_SECRET, { expiresIn: '7d' })
 }

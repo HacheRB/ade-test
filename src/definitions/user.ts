@@ -8,6 +8,9 @@ export enum Roles {
 	USER = 'USER',
 }
 
+// Not much time, would need to investigate how to transform an enum to a iterable object with ts.
+const rolesArray = ['ADMIN', 'DIRECTOR', 'OFFICER', 'USER']
+
 export interface IUser {
 	email: string
 	hashedPassword: string
@@ -17,19 +20,20 @@ export interface IUser {
 	bike_case?: Types.ObjectId
 	bikes?: [Types.ObjectId]
 }
-
-export interface UserCreation {
+export interface IUserCreation {
 	email: string
 	password: string
 	name: string
+	role: Roles
 }
+export interface IEmployeeCreation extends IUserCreation {}
 
-export interface UserLogin {
+export interface IUserLogin {
 	email: string
 	password: string
 }
 
-export interface IResponseUser {
+export interface IUserToken {
 	id: string
 	email: string
 	role: Roles
@@ -37,12 +41,22 @@ export interface IResponseUser {
 
 export const Schemas = {
 	user: {
-		creation: Joi.object<UserCreation>({
+		creation: Joi.object<IUserCreation>({
 			email: Joi.string().email().required(),
 			password: Joi.string().min(4).max(64).required(),
 			name: Joi.string().min(4).max(144).required(),
 		}),
-		login: Joi.object<UserCreation>({
+		// Investigate how to generate base schema
+		employeeCreation: Joi.object<IEmployeeCreation>({
+			email: Joi.string().email().required(),
+			password: Joi.string().min(4).max(64).required(),
+			name: Joi.string().min(4).max(144).required(),
+			role: Joi.string()
+				.required()
+				.valid(...rolesArray),
+		}),
+
+		login: Joi.object<IUserCreation>({
 			email: Joi.string().email().required(),
 			password: Joi.string().min(4).max(64).required(),
 		}),
