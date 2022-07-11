@@ -33,6 +33,7 @@ export async function updateDepartment(id: string, data: DepartmentName) {
 	return department
 }
 
+//This both functions don't work
 export async function getOfficersDepartment(officerId: string) {
 	const department = await Department.findOne({
 		officers: { $pull: [officerId] },

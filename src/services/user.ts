@@ -28,12 +28,10 @@ export async function registerUser(userParams: IUserCreation) {
 	const savedUser = await user.save()
 
 	if (!savedUser) throw Error('NOT_CREATED')
-	console.log(savedUser)
+	//Needs refactor
 	if (savedUser.is_available) {
-		console.log('user available')
 		handleAvailableOfficer(savedUser._id.toString())
 	}
-
 	return savedUser
 }
 
