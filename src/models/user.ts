@@ -13,10 +13,6 @@ const UserSchema: Schema = new Schema({
 		type: String,
 		required: true,
 	},
-	verified: {
-		type: Boolean,
-		default: false,
-	},
 	name: {
 		type: String,
 		min: 4,
@@ -28,10 +24,19 @@ const UserSchema: Schema = new Schema({
 		enum: ['ADMIN', 'DIRECTOR', 'OFFICER', 'USER'],
 		default: 'USER',
 	},
-	bike_case: {
-		type: Schema.Types.ObjectId,
-		required: false,
-		ref: 'Bike',
+	verified: {
+		type: Boolean,
+		default: false,
+	},
+
+	investigates_bikes: {
+		type: Boolean,
+		default: true,
+	},
+
+	is_available: {
+		type: Boolean,
+		default: true,
 	},
 	bikes: [
 		{

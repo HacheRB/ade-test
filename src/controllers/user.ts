@@ -9,7 +9,7 @@ import {
 } from '../services/user'
 
 //Test endpoint to verify token
-export const test = async (req: Request, res: Response) => {
+export const testUserToken = async (req: Request, res: Response) => {
 	try {
 		return res.status(200).json({ ok: 1, ...req.user })
 	} catch (err) {

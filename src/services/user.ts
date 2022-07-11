@@ -27,6 +27,8 @@ export async function registerUser(userParams: IUserCreation) {
 export async function authenticateUser(email: string, password: string) {
 	const registeredUser = await User.findOne({ email: email })
 
+	if (!registeredUser) throw Error('NOT_FOUND')
+
 	if (!checkPassword(password, registeredUser.hashedPassword)) {
 		throw Error('Incorrect email or password')
 	}

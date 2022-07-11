@@ -12,19 +12,9 @@ const DepartmentSchema: Schema = new Schema({
 	},
 	officers: [
 		{
-			investigates_bikes: {
-				type: Boolean,
-				default: false,
-			},
-			is_available: {
-				type: Boolean,
-				default: false,
-			},
-			officer_id: {
-				type: Schema.Types.ObjectId,
-				default: [],
-				ref: 'User',
-			},
+			type: Schema.Types.ObjectId,
+			default: [],
+			ref: 'User',
 		},
 	],
 })

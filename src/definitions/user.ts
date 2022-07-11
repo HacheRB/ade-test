@@ -14,10 +14,11 @@ const rolesArray = ['ADMIN', 'DIRECTOR', 'OFFICER', 'USER']
 export interface IUser {
 	email: string
 	hashedPassword: string
-	verified: boolean
 	name: string
 	role: Roles
-	bike_case?: Types.ObjectId
+	verified: boolean
+	investigates_bikes: boolean
+	is_available: boolean
 	bikes?: [Types.ObjectId]
 }
 export interface IUserCreation {

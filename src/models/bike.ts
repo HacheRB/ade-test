@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose'
-import { IBike } from '../definitions/bike'
+import { BikeStatus, IBike } from '../definitions/bike'
 
 export interface IBikeModel extends IBike, Document {}
 
@@ -34,6 +34,11 @@ const BikeSchema: Schema = new Schema({
 		max: 500,
 		required: true,
 	},
+	status: {
+		type: String,
+		enum: ['REPORTED', 'ASSIGNED', 'UNASSIGNED', 'CLOSED'],
+		default: 'UNASSIGNED',
+	},
 	user: {
 		type: Schema.Types.ObjectId,
 		required: true,
@@ -43,11 +48,6 @@ const BikeSchema: Schema = new Schema({
 		type: Schema.Types.ObjectId,
 		required: false,
 		ref: 'User',
-	},
-	department: {
-		type: Schema.Types.ObjectId,
-		required: false,
-		ref: 'Department',
 	},
 })
 

@@ -1,14 +1,15 @@
 import express, { Request, Response } from 'express'
 
-import { jwtAuthHandler } from '../middleware/jwt-auth-handler'
+import authRouter from '../routes/auth'
 import bikeRouter from '../routes/bike'
 import departmentRouter from '../routes/department'
 import userRouter from '../routes/user'
 
 const router = express.Router()
 
-router.use('/bikes', jwtAuthHandler, bikeRouter)
-router.use('/departments', jwtAuthHandler, departmentRouter)
+router.use('/auth', authRouter)
+router.use('/bikes', bikeRouter)
+router.use('/departments', departmentRouter)
 router.use('/users', userRouter)
 
 router.get('/healthcheck', (req: Request, res: Response) => {
