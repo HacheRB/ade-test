@@ -8,7 +8,7 @@ export enum Roles {
 	USER = 'USER',
 }
 
-// Not much time, would need to investigate how to transform an enum to a iterable object with ts.
+// Not much time, would need to investigate how to transform an enum to a iterable object/array with ts.
 const rolesArray = ['ADMIN', 'DIRECTOR', 'OFFICER', 'USER']
 
 export interface IUser {

@@ -13,6 +13,10 @@ mongoose.connection.on('error', (error: typeof mongoose.Error) => {
 	logger.error(error)
 })
 
+mongoose.connection.on('disconnected', (error: typeof mongoose.Error) => {
+	//Need to handle reconnection
+	logger.error(error)
+})
 export async function connectToDb() {
 	try {
 		await mongoose.connect(config.DB_URI)
@@ -22,5 +26,6 @@ export async function connectToDb() {
 }
 
 export async function mongoDisconnectFromDb() {
+	logger.info('${PID} disconnected from Mongoose')
 	await mongoose.disconnect()
 }

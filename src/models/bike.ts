@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose'
-import { BikeStatus, IBike } from '../definitions/bike'
+import { IBike } from '../definitions/bike'
 
 export interface IBikeModel extends IBike, Document {}
 

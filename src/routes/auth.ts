@@ -11,13 +11,8 @@ import { jwtAuthHandler } from '../middleware/jwt-auth-handler'
 
 const router = express.Router()
 
-router.get('/testToken', testUserToken) // Needs authorization middleware for current User
+router.get('/testToken', jwtAuthHandler, testUserToken) //Test endpoint
 router.post('/', validateWithJoi(Schemas.user.creation), registerUser)
-router.post(
-	'/login',
-	validateWithJoi(Schemas.user.login),
-	authenticateUser,
-	jwtAuthHandler,
-)
+router.post('/login', validateWithJoi(Schemas.user.login), authenticateUser)
 
 export default router

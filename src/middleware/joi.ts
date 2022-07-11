@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { ObjectSchema } from 'joi'
 import logger from '../utils/logger'
 
-//Getting TS Errors, need to refactor this to accept Request Property to validate different fields
+//Don't use error-handler middleware so I send back validation errors by joi
 export const validateWithJoi = (schema: ObjectSchema) => {
 	return async (req: Request, res: Response, next: NextFunction) => {
 		try {
@@ -17,6 +17,7 @@ export const validateWithJoi = (schema: ObjectSchema) => {
 	}
 }
 
+//Getting TS Errors, need to refactor above method to accept Request Property(req.body or req.query) to validate different fields - no time.
 export const validateQueryWithJoi = (schema: ObjectSchema) => {
 	return async (req: Request, res: Response, next: NextFunction) => {
 		try {

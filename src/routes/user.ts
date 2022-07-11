@@ -8,7 +8,7 @@ import { validateWithJoi } from '../middleware/joi'
 
 const router = express.Router()
 
-router.get('/', jwtAuthHandler, authorize(Roles.ADMIN), getUsers)
+router.get('/', jwtAuthHandler, getUsers) //No middleware for easier testing
 
 router.post(
 	'/employee',

@@ -17,6 +17,9 @@ export function jwtAuthHandler(
 	try {
 		const { id, email, role } = jwt.verify(token, JWT_SECRET) as IUserToken
 		req.user = { id, email, role }
+		// We should save token on user account so we can invalidate different token from saved one
+		// user = finduser.req.email
+		// user.token !== token throw error
 		next()
 	} catch (err) {
 		res.clearCookie('token')
