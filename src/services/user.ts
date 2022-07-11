@@ -11,6 +11,14 @@ import {
 } from '../services/bike'
 import { checkPassword, hashPassword } from '../utils/bcrypt'
 
+export async function getUsers() {
+	const users = await User.find()
+
+	if (!users || users.length < 1) throw Error('NOT_FOUND')
+
+	return users
+}
+
 export async function registerUser(userParams: IUserCreation) {
 	const registeredUser = await User.findOne({ email: userParams.email })
 

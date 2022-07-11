@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { nextTick } from 'process'
 
 import { BikeParams, BikeStatus, IBikeUpdateParams } from '../definitions/bike'
 import {
@@ -38,7 +39,11 @@ export async function getBikes(
 }
 
 //Needs refactor
-export async function registerBike(req: Request, res: Response) {
+export async function registerBike(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
 	const bikeParams = req.body as BikeParams
 	const userId = req.user.id
 	let status = BikeStatus.UNASSIGNED
@@ -65,7 +70,7 @@ export async function registerBike(req: Request, res: Response) {
 			message: `Bike with license plate ${bike.license_number} Registered`,
 		})
 	} catch (err) {
-		res.status(500).json({ ok: 0, message: err.message })
+		next(err)
 	}
 }
 

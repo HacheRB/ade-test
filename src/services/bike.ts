@@ -5,8 +5,6 @@ import {
 } from '../definitions/bike'
 import Bike from '../models/bike'
 
-import { findAvailableOfficerId as findAvailableOfficerIdService } from './user'
-
 export async function getBike(
 	officerId: string | null,
 	status = BikeStatus.UNASSIGNED,
